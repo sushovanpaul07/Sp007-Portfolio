@@ -1,147 +1,206 @@
-import logo from "./logo.svg";
-import "./App.css";
-import { useEffect, useRef, useState } from "react";
-import Typewriter from "typewriter-effect/dist/core";
-var app = document.getElementById("summary-box");
+import tableImage from "./table.png";
+import displayBottom from "./displayBottom.png";
+import displayTop from "./displayTop.png";
+import { useState } from "react";
+import { useEffect } from "react";
+const App = () => {
+  const [hour, setHour] = useState("");
+  const [minute, setMinute] = useState("");
+  const [sec, setSec] = useState("");
+  const [day, setDay] = useState("");
 
-function App() {
-  var typewriter = new Typewriter(app, {
-    delay: 75,
-  });
-  typewriter
-    .pauseFor(200)
-    .typeString("Hey Nice to see you there")
-    .pauseFor(300)
-    .deleteChars(5)
-    .typeString(
-      "<strong>here</strong><p> I am a <strong> Software Developer</strong></p>  "
-    )
-    .typeString(
-      '<strong>only <span style="color: #27ae60;">5kb</span> Gzipped!</strong>'
-    )
-    .pauseFor(500)
-    .start();
-  const page1 = useRef(null);
-  const page2 = useRef(null);
-  const page3 = useRef(null);
-  const page4 = useRef(null);
-  const page5 = useRef(null);
-  const onScrollHandler = () => {
-    page1.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-  const onScrollHandlerPage1 = () => {
-    page2.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-  const onScrollHandlerPage2 = () => {
-    page3.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-  const onScrollHandlerPage3 = () => {
-    page4.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-  const onScrollHandlerPage4 = () => {
-    page5.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-  const onScrollHandlerPage5 = () => {
-    page1.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-  const onScrollhandler = () => {
-    console.log("scrolling");
+  useEffect(() => {
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const today = new Date();
+    const day = today.getDay();
+    setDay(days[day]);
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      console.log("hit");
+      updateTime();
+    }, 1000);
+
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, 1);
+
+  const updateTime = () => {
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
+
+    // Format the time with leading zeroes for single digits
+    setHour(hours.toString().padStart(2, "0"));
+    setMinute(minutes.toString().padStart(2, "0"));
+    setSec(seconds.toString().padStart(2, "0"));
   };
 
   return (
-    <div className="App">
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        background: "radial-gradient(circle, #120c08 0%, rgba(0,0,0,1) 100%)",
+      }}
+    >
       <div
         style={{
-          width: "500vw",
-          height: "100vh",
+          width: "90%",
+          height: "95%",
+          margin: "auto auto 0 auto",
           display: "flex",
         }}
       >
-        <div
-          ref={page1}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "pink",
-          }}
-        >
-          <div
+        <div style={{ width: "max-content", height: "max-content" }}>
+          <p
             style={{
-              width: "60vw",
-              display: "flex",
-              justifyContent: "space-between",
+              fontFamily: `"Mina", sans-serif`,
+              margin: 0,
+              fontSize: "4rem",
+              color: "gray",
             }}
           >
-            <img
-              style={{ width: "20vw" }}
-              src={`assets/images/profile-img.png`}
-            />
-            <div style={{}}>
-              <p
-                id="summary-box"
-                style={{
-                  width: "30vw",
-                  fontSize: "20px",
-                  lineHeight: "30px",
-                  textAlign: "justify",
-                }}
-              ></p>
-            </div>
-          </div>
-          <button onClick={onScrollHandlerPage1}>click me to scroll</button>
+            {hour}:{minute}:{sec}
+          </p>
+          <p
+            style={{
+              fontFamily: `"Mina", sans-serif`,
+              margin: 0,
+              fontWeight: 800,
+              fontSize: "1.4rem",
+              color: "gray",
+              letterSpacing: "10px",
+            }}
+          >
+            {day.toUpperCase()}
+          </p>
         </div>
-
         <div
-          ref={page2}
           style={{
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "lightgreen",
-          }}
-          onScroll={onScrollhandler}
-        >
-          <button onClick={onScrollHandlerPage2}>click me to scroll</button>
-        </div>
-
-        <div
-          ref={page3}
-          style={{
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "coral",
+            height: "95%",
+            width: "90%",
+            display: "flex",
+            position: "absolute",
+            alignItems: "flex-end",
+            justifyContent: "center",
+            zIndex: 4,
           }}
         >
-          <button onClick={onScrollHandlerPage3}>click me to scroll</button>
+          <img
+            src={tableImage}
+            style={{
+              margin: "auto",
+              position: "absolute",
+              marginBottom: 0,
+              marginTop: "auto",
+              width: "1000px",
+              height: "200px",
+              flex: "none",
+            }}
+          />
         </div>
-
         <div
-          ref={page4}
           style={{
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "yellow",
+            height: "95%",
+            width: "90%",
+            display: "flex",
+            justifyContent: "center",
+            position: "absolute",
+            zIndex: 3,
           }}
         >
-          <button onClick={onScrollHandlerPage4}>click me to scroll</button>
+          <img
+            src={displayBottom}
+            style={{
+              width: "500px",
+              marginTop: "auto",
+              marginBottom: "150px",
+              filter: "drop-shadow(5px -20px 40px #165196)",
+            }}
+          />
         </div>
-
         <div
-          ref={page5}
           style={{
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "lightblue",
+            height: "95%",
+            width: "90%",
+            display: "flex",
+            justifyContent: "center",
+            position: "absolute",
+            zIndex: 6,
           }}
         >
-          <button onClick={onScrollHandlerPage5}>click me to scroll</button>
+          <img
+            src={displayTop}
+            style={{
+              width: "380px",
+              marginTop: "auto",
+              marginBottom: "360px",
+              filter: "drop-shadow(5px -20px 40px #C26827)",
+            }}
+          />
+        </div>
+        <div
+          style={{
+            flex: "none",
+            maxWidth: "500px",
+            width: "max-content",
+            height: "450px",
+            marginLeft: "auto",
+            display: "flex",
+          }}
+        >
+          <p
+            style={{
+              fontFamily: `"Lilita One", sans-serif`,
+              fontWeight: 800,
+              height: "350px",
+              lineHeight: 1,
+              fontSize: "5rem",
+              margin: 0,
+              textAlign: "right",
+
+              color: "rgba(255,255,255,0.2)",
+            }}
+          >
+            MY METAVERSE DEV<br></br> SETUP
+          </p>
+          <div
+            style={{
+              flex: "none",
+              marginTop: "10px",
+              borderTopLeftRadius: "30px",
+              borderBottomLeftRadius: "30px",
+              marginLeft: "10px",
+              width: "10px",
+              height: "330px",
+              backgroundColor: "#FFA800",
+              boxShadow: "-20px 0px 50px 3px rgba(255,145,20,1) ",
+            }}
+          ></div>
+
+          <div
+            style={{
+              flex: "none",
+              width: "30px",
+              height: "350px",
+              backgroundColor: "#1D1D1D",
+            }}
+          ></div>
         </div>
       </div>
     </div>
   );
-}
-
+};
 export default App;
