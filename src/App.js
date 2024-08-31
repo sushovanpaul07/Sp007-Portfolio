@@ -3,13 +3,21 @@ import displayBottom from "./displayBottom.png";
 import displayTop from "./displayTop.png";
 import { useState } from "react";
 import { useEffect } from "react";
+// import { moment } from "moment";
 const App = () => {
+  // const now = moment();
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
   const [sec, setSec] = useState("");
   const [day, setDay] = useState("");
+  const [year, setYear] = useState("");
+  const [month, setMonth] = useState("");
+  const [date, setDate] = useState("");
+  // const formattedDate = now.format("MMMM Do YYYY");
 
   useEffect(() => {
+    const today = new Date();
+
     const days = [
       "Sunday",
       "Monday",
@@ -19,7 +27,24 @@ const App = () => {
       "Friday",
       "Saturday",
     ];
-    const today = new Date();
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    setMonth(monthNames[today.getMonth()]);
+    setYear(today.getFullYear());
+    setDate(today.getDate());
     const day = today.getDay();
     setDay(days[day]);
   }, []);
@@ -85,6 +110,18 @@ const App = () => {
             }}
           >
             {day.toUpperCase()}
+          </p>
+          <p
+            style={{
+              fontFamily: `"Mina", sans-serif`,
+              margin: 0,
+              fontWeight: 300,
+              fontSize: "0.8rem",
+              color: "orange",
+              letterSpacing: "10px",
+            }}
+          >
+            {date} {month} {year}
           </p>
         </div>
         <div
